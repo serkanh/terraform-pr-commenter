@@ -3,7 +3,7 @@
 #############
 # Validations
 #############
-GITHUB_JOB=$GITHUB_JOB
+STEP_ID=$STEP_ID
 PR_NUMBER=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
 if [[ "$PR_NUMBER" == "null" ]]; then
 	echo "This isn't a PR."
@@ -191,7 +191,7 @@ if [[ $COMMAND == 'plan' ]]; then
     if [[ $COLOURISE == 'true' ]]; then
       CLEAN_PLAN=$(echo "$CLEAN_PLAN" | sed -r 's/^~/!/g') # Replace ~ with ! to colourise the diff in GitHub comments
     fi
-    PR_COMMENT="### Terraform \`$GITHUB_JOB\` \`plan\` Succeeded for Workspace: \`$WORKSPACE\`
+    PR_COMMENT="### Terraform \`$STEP_ID\` \`plan\` Succeeded for Workspace: \`$WORKSPACE\`
 <details$DETAILS_STATE><summary>Show Output</summary>
 
 \`\`\`diff
@@ -204,7 +204,7 @@ $CLEAN_PLAN
   # Meaning: Terraform plan failed.
   # Actions: Build PR comment.
   if [[ $EXIT_CODE -eq 1 ]]; then
-    PR_COMMENT="### Terraform \`$GITHUB_JOB\` \`plan\` Failed for Workspace: \`$WORKSPACE\`
+    PR_COMMENT="### Terraform \`$STEP_ID\` \`plan\` Failed for Workspace: \`$WORKSPACE\`
 <details$DETAILS_STATE><summary>Show Output</summary>
 
 \`\`\`
