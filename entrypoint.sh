@@ -213,6 +213,13 @@ $INPUT
 </details>"
   fi
 
+# Make sure PR comment is not bigger than GitHub's limit
+MAX_CHARS=65536
+if [ ${#PR_COMMENT} -gt $MAX_CHARS ]; then
+    OFFSET=$((${#PR_COMMENT} - MAX_CHARS))
+    PR_COMMENT="${PR_COMMENT:$OFFSET:MAX_CHARS}"
+fi
+
   # Add plan comment to PR.
   PR_PAYLOAD=$(echo '{}' | jq --arg body "$PR_COMMENT" '.body = $body')
   echo -e "\033[34;1mINFO:\033[0m Adding plan comment to PR."
