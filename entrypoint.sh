@@ -214,7 +214,7 @@ $INPUT
   fi
 
 # Make sure PR comment is not bigger than GitHub's limit
-MAX_CHARS=65536
+MAX_CHARS=60000
 if [ ${#PR_COMMENT} -gt $MAX_CHARS ]; then
     OFFSET=$((${#PR_COMMENT} - MAX_CHARS))
     PR_COMMENT="${PR_COMMENT:$OFFSET:MAX_CHARS}"
